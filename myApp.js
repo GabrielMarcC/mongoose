@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 require("dotenv").config();
 
 mongoose
@@ -12,7 +11,7 @@ mongoose
   })
   .catch((err) => console.log(err));
 
-let Person;
+let Person = require("./model.js");
 
 const createAndSavePerson = (done) => {
   done(null /*, data*/);
