@@ -11,7 +11,21 @@ mongoose
   })
   .catch((err) => console.log(err));
 
-let Person = require("./model.js");
+let Person = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    default: "Ana",
+  },
+  age: {
+    type: Number,
+    default: 28,
+  },
+  favoriteFoods: {
+    type: [String],
+    default: ["Hamburguer", "Apple", "pineapple", "mango"],
+  },
+});
 
 const createAndSavePerson = (done) => {
   done(null /*, data*/);
