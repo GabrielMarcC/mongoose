@@ -42,11 +42,19 @@ const createAndSavePerson = (done) => {
     return console.log(`person created ${data}`);
   });
 };
-createAndSavePerson();
 
-const createManyPeople = async (arrayOfPeople, done) => {};
+const manyPeoples = [
+  { name: "Bruno", age: 20, favoriteFoods: ["rice", "bean"] },
+  { name: "Júlia", age: 40, favoriteFoods: ["banana", "chocolate"] },
+];
 
-createManyPeople();
+const createManyPeople = async (arrayOfPeople, done) => {
+  Person.create(arrayOfPeople, function (err, people) {
+    if (err) return console.log(err);
+    done(null, people);
+  });
+};
+createManyPeople(manyPeoples);
 
 const findPeopleByName = (personName, done) => {
   done(null /*, data*/);
