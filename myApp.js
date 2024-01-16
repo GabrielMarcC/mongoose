@@ -1,15 +1,20 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("connected to database");
-  })
-  .catch((err) => console.log(err));
+const connectDB = () => {
+  try {
+    mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+
+    console.log("Connected");
+  } catch (error) {
+    if (error) return console.error(error);
+  }
+};
+
+connectDB();
 
 const personSchema = new mongoose.Schema({
   name: {
@@ -48,17 +53,24 @@ const manyPeoples = [
   { name: "Júlia", age: 40, favoriteFoods: ["banana", "chocolate"] },
 ];
 
-const createManyPeople = async (arrayOfPeople, done) => {
+const createManyPeople = (arrayOfPeople, done) => {
   Person.create(arrayOfPeople, function (err, people) {
     if (err) return console.log(err);
     done(null, people);
   });
 };
-createManyPeople(manyPeoples);
 
-const findPeopleByName = (personName, done) => {
-  done(null /*, data*/);
+const findPeopleByName = async (personName, done) => {
+  try {
+    const searchByName = await Person.find({ name: personName }).exec();
+
+    return console.log("data find: ", searchByName);
+  } catch (error) {
+    console.log(error);
+  }
 };
+
+findPeopleByName("Gabriel");
 
 const findOneByFood = (food, done) => {
   done(null /*, data*/);
